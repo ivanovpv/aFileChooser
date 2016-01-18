@@ -512,17 +512,29 @@ public class FileUtils {
 
     /**
      * Get the Intent for selecting content to be used in an Intent Chooser.
-     *
+     * Allows to select arbitrary file type
      * @return The intent for opening a file with Intent.createChooser()
      * @author paulburke
      */
     public static Intent createGetContentIntent() {
         // Implicitly allow the user to select a particular kind of data
+        return createGetContentIntent("*/*");
+    }
+    
+/**
+     * Get the Intent for selecting content to be used in an Intent Chooser.
+     * Allows to select only specific mime type (like "image/*" for images or "video/*" for videos, etc)
+     *
+     * @return The intent for opening a file with Intent.createChooser()
+     * @author paulburke
+     */
+    public static Intent createGetContentIntent(String mimeType) {
+        // Implicitly allow the user to select a particular kind of data
         final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         // The MIME data type filter
-        intent.setType("*/*");
+        intent.setType(mimeType);
         // Only return URIs that can be opened with ContentResolver
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         return intent;
-    }
+    }    
 }
